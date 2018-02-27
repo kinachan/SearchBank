@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>銀行検索</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+  </head>
+  <body>
+    <section class="description">
+      <div class="container form-field">
+        <div class="row">
+          <div class="col-sm-12 col-xs-12">
+            <h1>銀行コード・支店検索</h1>
+          </div>
+          <div class="col-sm-12 col-xs-12">
+            <p>銀行コードと支店を入力すると検索が可能です。</p>
+          </div>
+        </div>
+        <form>
+          <div class="row">
+            <div class="col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label>銀行コード</label>
+                <input type="text" name="bankCode" id="bankCode" class="form-control" placeholder="例：0004">
+              </div>
+            </div>
+            <div class="col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label>支店コード</label>
+                <input type="text" name="branchCode" id="branchCode"class="form-control"  placeholder="例：001">
+              </div>
+            </div>
+            <div class="col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label>銀行名</label>
+                <input type="text" name="bankName" id="bankName" class="form-control" placeholder="例：みずほ">
+              </div>
+            </div>
+            <div class="col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label>支店名</label>
+                <input type="text" name="branchName" id="branchName"class="form-control"  placeholder="例：池袋">
+              </div>
+            </div>
+            <div class="col-sm-6 col-xs-12">
+              <button type="submit" id="search" class="btn btn-primary">
+                検索
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+    <section>
+      <div class="container loading-container">
+        <div class="row">
+          <div class="col-sm-12 col-xs-12">
+            <div class="loading-wrapper">
+              <div class="loader" id="loader"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="table-content">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-xs-12">
+            <table class="table table-striped table-hover" id="table">
+              <thead>
+                <tr>
+                  <th>銀行コード</th>
+                  <th>銀行名</th>
+                  <th>支店名</th>
+                  <th>支店番号</th>
+                </tr>
+              </thead>
+              <tbody id="table-data">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="./js/index.js"></script>
+  </body>
+</html>
