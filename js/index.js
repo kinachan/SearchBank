@@ -1,4 +1,5 @@
 let rootPath;
+
 const getRootPath = () => {
   rootPath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/'));
 }
@@ -10,7 +11,10 @@ const readBanks = async () => {
 
 const readBranch = async (code) => {
   const url = `${rootPath}/data/branches/${code}.json`;
-  const res = await fetch(url);
+  let res;
+  try {
+    res = await fetch(url);
+  } catch (ignore) {} 
   if (res.ok) return res.json();
   return null;
 };
