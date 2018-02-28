@@ -1,5 +1,4 @@
 let rootPath;
-
 const getRootPath = () => {
   rootPath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/'));
 }
@@ -9,62 +8,23 @@ const readBanks = async () => {
   return res.json();
 }
 
-const readBranch = async (code) => {
-  const url = `${rootPath}/data/branches/${code}.json`;
-  let res;
-  try {
-    res = await fetch(url);
-  } catch (ignore) {} 
-  if (res.ok) return res.json();
-  return null;
-};
-
-const readBranchByKey = async (filteredBanks) => {
-  for (let bank of filteredBanks) {
-    const code = bank.code;
-    const branch = await readBranch(code);
-    if (branch) bank.branch = branch;
-  }
-  return filteredBanks;
+const searchBank = async (cond) => {
+  const banks = await readBanks();
+  return banks.banks.filter((bank) => {
+    return ((bank.code.includes(cond.bankCode) || !cond.bankCode) &&
+      (bank.name.includes(cond.bankName) || !cond.bankName))
+  });
 }
 
-const searchBank = async (condition) => {
-  const code = condition.bankCode;
-  const name = condition.bankName;
-
-  const banks = await readBanks();
-  let results = [];
-  Object.keys(banks).forEach((bankCode) => {
-    const bank = banks[bankCode];
-    if ((bankCode.includes(code) || !code) &&
-      (bank.name.includes(name) || !name)
-    ) {
-      results.push(bank);
-    }
-  });
-  return results;
-};
-
-const searchBranch = (condition, filteredBanks) => {
-  const branchCode = condition.branchCode;
-  const name = condition.branchName;
-
-  filteredBanks.forEach((bank) => {
-    let results = [];
-    //  branch階層
-    const branchesCode = Object.keys(bank.branch || []);
-    branchesCode.forEach((bCode) => {
-      const branch = bank.branch[bCode];
-      if (
-        (bCode.includes(branchCode) || !branchCode) &&
-        (branch.name.includes(name) || !name)
-      )  {
-        results.push(branch);
-      }
+const searchBranch = (cond, banks) => {
+  return banks.filter((bank) => {
+    const branches = bank.branch.filter((branch) => {
+      return ((branch.code.includes(cond.branchCode) || !cond.branchCode) &&
+      (branch.name.includes(cond.branch) || !cond.branch))
     });
-    bank.branch = results;
+    bank.branch = branches;
+    return true;
   });
-  return filteredBanks;
 };
 
 const setTableObject = (bank, branch) => {
@@ -163,7 +123,6 @@ const searchHandle = async (ev) => {
 const search = async () => {
   const condition = setCondition();
   const banks = await searchBank(condition);
-  await readBranchByKey(banks);
 
   const results = searchBranch(condition, banks);
   return results;
