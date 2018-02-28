@@ -31,6 +31,35 @@
   display: block;
 }
 
+/* SmartPhone */
+@media screen and (max-width: 767px) {
+  .table-content {
+    display: none;
+  }
+
+  .one-data {
+    margin: 16px 0;
+  }
+
+  .text {
+    color: #6c757d;
+  }
+
+  .text:after {
+    content: attr(data-value);
+    float: right;
+    color: #212529;
+  }
+}
+
+/* Desctop */
+@media screen and (min-width: 768px) {
+  .table-smartphone {
+    display: none;
+  }
+}
+
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
