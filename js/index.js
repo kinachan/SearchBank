@@ -20,7 +20,7 @@ const searchBranch = (cond, banks) => {
   return banks.filter((bank) => {
     const branches = bank.branch.filter((branch) => {
       return ((branch.code.includes(cond.branchCode) || !cond.branchCode) &&
-      (branch.name.includes(cond.branch) || !cond.branch))
+      (branch.name.includes(cond.branchName) || !cond.branchName))
     });
     bank.branch = branches;
     return true;
