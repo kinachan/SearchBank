@@ -92,7 +92,7 @@ const renderTableData = (oneData) => {
   result += Object.keys(oneData).map((key) => {
     return `
       <td>${oneData[key]}</td>
-    `});
+    `}).join('');
   return result;
 }
 
