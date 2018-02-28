@@ -1,4 +1,34 @@
 let rootPath;
+let device;
+let clickEvent;
+
+const Device = {
+  desktop: 0,
+  smartPhone: 1,
+};
+
+const TableTitle = {
+  code: '銀行コード',
+  name: '銀行名',
+  branch: '支店名',
+  branchCode: '支店番号',
+};
+
+const getDevice = () => {
+  const userAgent = navigator.userAgent;
+  if (userAgent.indexOf('iPhone') > 0 || userAgent.indexOf('iPod') > 0 ||
+    userAgent.indexOf('Android') > 0 && userAgent.indexOf('Mobile') > 0) {
+      device = Device.smartPhone;
+    } else {
+      device = Device.desktop;
+    }
+}
+
+const setClickEvent = () => {
+  clickEvent = device === Device.desktop ?
+    'click' : 'touchstart';
+};
+
 const getRootPath = () => {
   rootPath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/'));
 }
@@ -20,11 +50,15 @@ const searchBranch = (cond, banks) => {
   return banks.filter((bank) => {
     const branches = bank.branch.filter((branch) => {
       return ((branch.code.includes(cond.branchCode) || !cond.branchCode) &&
-      (branch.name.includes(cond.branch) || !cond.branch))
+      (branch.name.includes(cond.branchName) || !cond.branchName))
     });
     bank.branch = branches;
     return true;
   });
+};
+
+const getTableTitleByKey = (key) => {
+  return TableTitle[key];
 };
 
 const setTableObject = (bank, branch) => {
@@ -55,10 +89,21 @@ const createObjectsForTable = (banks) => {
 
 const renderTableData = (oneData) => {
   let result = '';
-  Object.keys(oneData).forEach((key) => {
-    result += `
+  result += Object.keys(oneData).map((key) => {
+    return `
       <td>${oneData[key]}</td>
     `});
+  return result;
+}
+
+const renderTableSpData = (oneData) => {
+  let result = '';
+  result += Object.keys(oneData).map((key) => {
+    const title = getTableTitleByKey(key);
+    return `<li class="list-group-item text" data-value="${oneData[key]}">
+        ${title}
+      </li>`
+  }).join('');
   return result;
 }
 
@@ -70,6 +115,21 @@ const renderTable = (data) => {
     return `<tr>${renderTableData(oneData)}</tr>`;
   }).join('');
   body.insertAdjacentHTML( 'beforeend', stringData );
+}
+
+const renderTableSmartPhone = (data) => {
+  const body = document.getElementById('table-data-sp');
+  body.innerHTML = '';
+  let stringData = '';
+  stringData += data.map((oneData) => {
+    return `
+    <div class="card one-data">
+      <ul class="list-group list-group-flush">
+        ${renderTableSpData(oneData)}
+      </ul>
+    </div>`;
+  }).join('');
+  body.insertAdjacentHTML('beforeend', stringData);
 }
 
 const escapeHtml = (data) => {
@@ -116,7 +176,9 @@ const searchHandle = async (ev) => {
   const searchResult = await search();
   const tableData = createObjectsForTable(searchResult);
 
-  renderTable(tableData);
+  const renderFunc = device === Device.desktop ?
+    renderTable : renderTableSmartPhone;
+  renderFunc(tableData);
   removeLoader();  
 }
 
@@ -130,9 +192,11 @@ const search = async () => {
 
 let searchButton;
 const onLoad = () => {
+  getDevice();
+  setClickEvent();
   getRootPath();
   searchButton = document.getElementById('search');
-  searchButton.addEventListener('click', searchHandle, false);
+  searchButton.addEventListener(clickEvent, searchHandle, false);
 }
 
 onLoad();
