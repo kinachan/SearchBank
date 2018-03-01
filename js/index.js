@@ -171,6 +171,9 @@ const removeLoader = () => {
 }
 
 const searchHandle = async (ev) => {
+  const load = document.getElementById('load-sp');
+  load.innerHTML = '読み込み中';
+ 
   ev.preventDefault();
   hideLoader();
   const searchResult = await search();
