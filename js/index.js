@@ -171,6 +171,7 @@ const removeLoader = () => {
 }
 
 const formHandle = async (ev) => {
+  alert('formHandle');
   const load = document.getElementById('load-sp');
   load.innerHTML = '読み込み中';
   await commonHandle();
