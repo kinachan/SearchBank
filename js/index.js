@@ -170,11 +170,20 @@ const removeLoader = () => {
   loader.classList.remove('loader-is-visible');
 }
 
-const searchHandle = async (ev) => {
-  alert('searchHandle');
+const formHandle = async (ev) => {
   const load = document.getElementById('load-sp');
   load.innerHTML = '読み込み中';
- 
+  await commonHandle();
+  load.innerHTML = '';
+  return false;
+}
+
+const searchHandle = async (ev) => {
+  await commonHandle(ev);
+  return false;
+}
+
+const commonHandle = async (ev) => {
   ev.preventDefault();
   ev.stopPropagation();
   hideLoader();
@@ -185,8 +194,6 @@ const searchHandle = async (ev) => {
     renderTable : renderTableSmartPhone;
   renderFunc(tableData);
   removeLoader();
-  load.innerHTML = '';
-  return false;
 }
 
 const search = async () => {
@@ -198,13 +205,16 @@ const search = async () => {
 }
 
 let searchButton;
-let forms;
+let searchForm;
 const onLoad = () => {
   getDevice();
   setClickEvent();
   getRootPath();
   searchButton = document.getElementById('search');
   searchButton.addEventListener(clickEvent, searchHandle, true);
+
+  searchForm = document.getElementById('search-form');
+  searchForm.addEventListener('submit', formHandle, true);
 }
 
 onLoad();

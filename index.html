@@ -7,12 +7,6 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/index.css">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <script>
-      function formHandle(ev) {
-        alert('formHandle');
-        return false;
-      }
-    </script>
   </head>
   <body>
     <section class="description">
@@ -25,7 +19,7 @@
             <p>銀行コードと支店を入力すると検索が可能です。</p>
           </div>
         </div>
-        <form method="post" action="#" id="search-form" onsubmit="return formHandle()">
+        <form method="post" action="#" id="search-form">
           <div class="row">
             <div class="col-sm-6 col-xs-12">
               <div class="form-group">
