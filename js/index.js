@@ -171,6 +171,9 @@ const removeLoader = () => {
 }
 
 const searchHandle = async (ev) => {
+  const load = document.getElementById('load-sp');
+  load.innerHTML = '読み込み中';
+ 
   ev.preventDefault();
   hideLoader();
   const searchResult = await search();
@@ -196,7 +199,7 @@ const onLoad = () => {
   setClickEvent();
   getRootPath();
   searchButton = document.getElementById('search');
-  searchButton.addEventListener(clickEvent, searchHandle, false);
+  searchButton.addEventListener('click', searchHandle, false);
 }
 
 onLoad();
