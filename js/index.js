@@ -1,5 +1,5 @@
 let rootPath;
-let device;
+let currentDevice;
 let clickEvent;
 
 const Device = {
@@ -15,17 +15,17 @@ const TableTitle = {
 };
 
 const getDevice = () => {
-  const userAgent = navigator.userAgent;
-  if (userAgent.indexOf('iPhone') > 0 || userAgent.indexOf('iPod') > 0 ||
-    userAgent.indexOf('Android') > 0 && userAgent.indexOf('Mobile') > 0) {
-      device = Device.smartPhone;
+  const _userAgent = navigator.userAgent;
+  if (_userAgent.indexOf('iPhone') > 0 || _userAgent.indexOf('iPod') > 0 ||
+    _userAgent.indexOf('Android') > 0 && _userAgent.indexOf('Mobile') > 0) {
+      currentDevice = Device.smartPhone;
     } else {
-      device = Device.desktop;
+      currentDevice = Device.desktop;
     }
 }
 
 const setClickEvent = () => {
-  clickEvent = device === Device.desktop ?
+  clickEvent = currentDevice === Device.desktop ?
     'click' : 'touchstart';
 };
 
@@ -171,18 +171,22 @@ const removeLoader = () => {
 }
 
 const searchHandle = async (ev) => {
+  alert('searchHandle');
   const load = document.getElementById('load-sp');
   load.innerHTML = '読み込み中';
  
   ev.preventDefault();
+  ev.stopPropagation();
   hideLoader();
   const searchResult = await search();
   const tableData = createObjectsForTable(searchResult);
 
-  const renderFunc = device === Device.desktop ?
+  const renderFunc = currentDevice === Device.desktop ?
     renderTable : renderTableSmartPhone;
   renderFunc(tableData);
-  removeLoader();  
+  removeLoader();
+  load.innerHTML = '';
+  return false;
 }
 
 const search = async () => {
@@ -194,6 +198,7 @@ const search = async () => {
 }
 
 let searchButton;
+let forms;
 const onLoad = () => {
   getDevice();
   setClickEvent();
