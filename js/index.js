@@ -199,7 +199,7 @@ const onLoad = () => {
   setClickEvent();
   getRootPath();
   searchButton = document.getElementById('search');
-  searchButton.addEventListener(clickEvent, searchHandle, false);
+  searchButton.addEventListener(clickEvent, searchHandle, true);
 }
 
 onLoad();
