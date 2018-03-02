@@ -170,14 +170,6 @@ const removeLoader = () => {
   loader.classList.remove('loader-is-visible');
 }
 
-const formHandle = async (ev) => {
-  const load = document.getElementById('load-sp');
-  load.innerHTML = '読み込み中';
-  await commonHandle();
-  load.innerHTML = '';
-  return false;
-}
-
 const searchHandle = async (ev) => {
   await commonHandle(ev);
   return false;
@@ -205,16 +197,12 @@ const search = async () => {
 }
 
 let searchButton;
-let searchForm;
 const onLoad = () => {
   getDevice();
   setClickEvent();
   getRootPath();
   searchButton = document.getElementById('search');
   searchButton.addEventListener(clickEvent, searchHandle, true);
-
-  searchForm = document.getElementById('search-form');
-  searchForm.addEventListener('submit', formHandle, true);
 }
 
 onLoad();
