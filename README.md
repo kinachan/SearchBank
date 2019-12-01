@@ -1,2 +1,4 @@
 # SearchBank
-SmartPhoneƒfƒUƒCƒ“‚ğì¬‚µ‚Ü‚µ‚½‚ªA‚Ü‚¾“®ìŠm”F‚Ío—ˆ‚Ä‚Ü‚¹‚ñB(chrome developer‚Å‚ÍŠm”FÏ‚İ)
+SmartPhoneãƒ‡ã‚¶ã‚¤ãƒ³ã‚’ä½œæˆã—ã¾ã—ãŸãŒã€ã¾ã å‹•ä½œç¢ºèªã¯å‡ºæ¥ã¦ã¾ã›ã‚“ã€‚(chrome developerã§ã¯ç¢ºèªæ¸ˆã¿)
+
+https://kinachan.github.io/SearchBank/
